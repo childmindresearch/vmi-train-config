@@ -86,7 +86,10 @@ const deepCopy = <T, U = T extends Array<infer V> ? V : never>(source: T ): T =>
   return source
 }
 
-const stringifyData = (data: Data) => {
+const stringifyData = (data: any) => {
+  if (Object.keys(data).length === 0) {
+    return '{ }';
+  }
   const copyData: any = deepCopy(data);
   copyData.rooms.forEach((room: any) => {
     if (!room.path){
