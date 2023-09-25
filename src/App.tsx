@@ -51,22 +51,6 @@ const initialData = {
 const renderers = [
   ...materialRenderers,
 ];
-type RoomData = {
-  seed: number;
-  width: number;
-  height: number;
-  durationSec: number;
-  numDistractors: number;
-  path: { x: number; y: number }[];
-  timepos: { Time: number; Position: number }[];
-  occlusionStartStop?: { Start: number; Stop: number }[];
-  jumps: number[];
-  timeposInterpolation: boolean;
-};
-
-type Data = {
-  rooms: RoomData[];
-};
 
 
 const deepCopy = <T, U = T extends Array<infer V> ? V : never>(source: T ): T => {
