@@ -38,7 +38,7 @@ jobs:
       - name: Upload
         uses: actions/upload-pages-artifact@v2
         with:
-          path: github-pages.tar.gz
+          path: ./
 
   deploy:
     needs: build
