@@ -102,7 +102,6 @@ const App = () => {
   const [data, setData] = useState<any>(initialData);
   const stringifiedData = useMemo(() => stringifyData(data), [data]);
 
-
   const clearData = () => {
     setData({});
   };
