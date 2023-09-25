@@ -1,31 +1,21 @@
-# JSON Forms React seed App
+# VMI Train Configuration Frontend
 
-This seed demonstrates how to use [JSON Forms](https://jsonforms.io) with React in order to render a simple form for displaying a task entity.
+This repository serves as the frontend for creating configurations for the VMI Train task. It leverages the power of JSON Forms to provide a dynamic and user-friendly interface for configuration creation.
 
-It is based on `create-react-app` and only contains minor modifications.
+## Repository Structure
 
-- Execute `npm ci` to install the prerequisites. If you want to have the latest released versions use `npm install`.
-- Execute `npm start` to start the application.
+- **React Application**: The core application resides in the `src` directory. The main entry point is [App.tsx](https://github.com/cmi-dair/vmi-train-config/blob/master/src/App.tsx) and the primary rendering logic is in [index.tsx](https://github.com/cmi-dair/vmi-train-config/blob/master/src/index.tsx).
+- **Configuration Schema**: The JSON schema that defines the structure and constraints of the configuration is located in [schema.json](https://github.com/cmi-dair/vmi-train-config/blob/master/src/schema.json).
+- **Testing Suite**: Cypress tests can be found in the `cypress` directory. The primary test suite is [test_form.spec.js](https://github.com/cmi-dair/vmi-train-config/blob/master/cypress/integration/test_form.spec.js).
+- **CI/CD Configuration**: Continuous Integration and Deployment configurations are housed in the `.github/workflows` directory. The main CI workflow is in [main.yml](https://github.com/cmi-dair/vmi-train-config/blob/master/.github/workflows/main.yml) and the GitHub Pages deployment configuration is in [gh_pages.yaml](https://github.com/cmi-dair/vmi-train-config/blob/master/.github/workflows/gh_pages.yaml).
 
-Browse to http://localhost:3000 to see the application in action.
+## Getting Started
 
-## File Structure
+1. Clone the repository.
+2. Install dependencies with `npm ci`.
+3. Launch the development server using `npm start`.
+4. To execute Cypress tests, run `npm run cypress:ci`.
 
-Let's briefly have a look at the most important files:
+## Contributing
 
-- `src/schema.json` contains the JSON schema (also referred to as 'data schema')
-- `src/uischema.json` contains the UI schema
-- `src/index.tsx` is the entry point of the application. We also customize the Material UI theme to give each control more space.
-- `src/App.tsx` is the main app component and makes use of the `JsonForms` component in order to render a form.
-
-The [data schema](src/schema.json) defines the structure of a Task: it contains attributes such as title, description, due date and so on.
-
-The [corresponding UI schema](src/uischema.json) specifies controls for each property and puts them into a vertical layout that in turn contains two horizontal layouts.
-
-## Rendering JSON Forms
-
-JSON Forms is rendered by importing and using the `JsonForms` component and directly handing over the `schema`, `uischema`, `data`, `renderer` and `cell` props. We listen to changes in the form via the `onChange` callback.
-
-## Custom renderers
-
-Please see [our corresponding tutorial](https://jsonforms.io/docs/tutorial) on how to add custom renderers.
+We welcome contributions! Please ensure to run all tests and adhere to the repository's coding standards before submitting a pull request.
