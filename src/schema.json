@@ -1,32 +1,110 @@
 {
   "type": "object",
   "properties": {
-    "name": {
-      "type": "string",
-      "minLength": 1
-    },
-    "description": {
-      "title": "Long Description",
-      "type": "string"
-    },
-    "done": {
-      "type": "boolean"
-    },
-    "due_date": {
-      "type": "string",
-      "format": "date"
-    },
-    "rating": {
-      "type": "integer",
-      "maximum": 5
-    },
-    "recurrence": {
-      "type": "string",
-      "enum": ["Never", "Daily", "Weekly", "Monthly"]
-    },
-    "recurrence_interval": {
-      "type": "integer"
+    "rooms": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "seed": {
+            "type": "integer",
+            "description": "Seed for the random number generator",
+            "default": 42
+          },
+          "width": {
+            "type": "number",
+            "description": "Width of the room",
+            "default": 20
+          },
+          "height": {
+            "type": "number",
+            "description": "Height of the room",
+            "default": 20
+          },
+          "durationSec": {
+            "type": "number",
+            "description": "Duration of the room in seconds"
+          },
+          "numDistractors": {
+            "type": "integer",
+            "description": "Number of distractors in the room"
+          },
+          "path": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                }
+              }
+            },
+            "minItems": 2,
+            "description": "Path of the agent in the room. The minima and maxima of x and y are [0, 1]."
+          },
+          "timepos": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "time": {
+                  "type": "number",
+                  "Description": "Time in seconds"
+                },
+                "position": {
+                  "type": "number",
+                  "Description": "Position as a fraction of the total track length"
+                }
+              }
+            },
+            "minItems": 2
+          },
+          "occlusionStartStop": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "start": {
+                  "type": "number",
+                  "description": "Start of the occlusion as a fraction of the total track length."
+                },
+                "stop": {
+                  "type": "number",
+                  "description": "Stop of the occlusion as a fraction of the total track length."
+                }
+              }
+            }
+          },
+          "jumps": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "description": "List of jump times in seconds"
+          },
+          "timeposInterpolation": {
+            "type": "boolean",
+            "default": false,
+            "description": "Interpolate timepos"
+          }
+        },
+        "required": [
+          "seed",
+          "width",
+          "height",
+          "durationSec",
+          "numDistractors",
+          "path",
+          "timepos"
+        ]
+      },
+      "minItems": 1
     }
   },
-  "required": ["name", "due_date"]
+  "required": [
+    "rooms"
+  ]
 }

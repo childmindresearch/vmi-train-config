@@ -1,19 +1,16 @@
-import { Fragment, useState, useMemo } from 'react';
-import { JsonForms } from '@jsonforms/react';
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import logo from './logo.svg';
-import './App.css';
-import schema from './schema.json';
-import uischema from './uischema.json';
 import {
   materialCells,
   materialRenderers,
 } from '@jsonforms/material-renderers';
-import RatingControl from './RatingControl';
-import ratingControlTester from './ratingControlTester';
+import { JsonForms } from '@jsonforms/react';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';
+import { Fragment, useMemo, useState } from 'react';
+import './App.css';
+import logo from './logo.svg';
+import schema from './schema.json';
 
 const useStyles = makeStyles({
   container: {
@@ -42,27 +39,88 @@ const useStyles = makeStyles({
 });
 
 const initialData = {
-  name: 'Send email to Adrian',
-  description: 'Confirm if you have passed the subject\nHereby ...',
-  done: true,
-  recurrence: 'Daily',
-  rating: 3,
+  rooms: [
+    {
+      "seed": 42,
+      "width": 20,
+      "height": 20,
+      "durationSec": 20,
+    }
+  ]
 };
 
 const renderers = [
   ...materialRenderers,
-  //register custom renderers
-  { tester: ratingControlTester, renderer: RatingControl },
 ];
+type RoomData = {
+  seed: number;
+  width: number;
+  height: number;
+  durationSec: number;
+  numDistractors: number;
+  path: { x: number; y: number }[];
+  timepos: { Time: number; Position: number }[];
+  occlusionStartStop?: { Start: number; Stop: number }[];
+  jumps: number[];
+  timeposInterpolation: boolean;
+};
+
+type Data = {
+  rooms: RoomData[];
+};
+
+
+const deepCopy = <T, U = T extends Array<infer V> ? V : never>(source: T ): T => {
+  if (Array.isArray(source)) {
+    return source.map(item => (deepCopy(item))) as T & U[]
+  }
+  if (source instanceof Date) {
+    return new Date(source.getTime()) as T & Date
+  }
+  if (source && typeof source === 'object') {
+    return (Object.getOwnPropertyNames(source) as (keyof T)[]).reduce<T>((o, prop) => {
+      Object.defineProperty(o, prop, Object.getOwnPropertyDescriptor(source, prop)!)
+      o[prop] = deepCopy(source[prop])
+      return o
+    }, Object.create(Object.getPrototypeOf(source)))
+  }
+  return source
+}
+
+const stringifyData = (data: Data) => {
+  const copyData: any = deepCopy(data);
+  copyData.rooms.forEach((room: any) => {
+    if (!room.path){
+      return;
+    }
+    room.path = room.path.map((p: any) => ([ p.x, p.y ])).flat();
+  })
+  copyData.rooms.forEach((room: any) => {
+    if (!room.timepos){
+      return;
+      }
+      room.timepos = room.timepos.map((p: any) => ([ p.time, p.position ])).flat();
+  })
+  copyData.rooms.forEach((room: any) => {
+    if (!room.occlusionStartStop){
+      return;
+      }
+      room.occlusionStartStop = room.occlusionStartStop.map((p: any) => ([ p.start, p.stop ])).flat();
+  })
+
+  return JSON.stringify(copyData, null, 2);
+}
 
 const App = () => {
   const classes = useStyles();
   const [data, setData] = useState<any>(initialData);
-  const stringifiedData = useMemo(() => JSON.stringify(data, null, 2), [data]);
+  const stringifiedData = useMemo(() => stringifyData(data), [data]);
+
 
   const clearData = () => {
     setData({});
   };
+
 
   return (
     <Fragment>
@@ -103,7 +161,6 @@ const App = () => {
           <div className={classes.demoform}>
             <JsonForms
               schema={schema}
-              uischema={uischema}
               data={data}
               renderers={renderers}
               cells={materialCells}
