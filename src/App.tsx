@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import { makeStyles } from '@mui/styles';
 import { Fragment, useMemo, useState } from 'react';
 import './App.css';
-import logo from './logo.svg';
 import schema from './schema.json';
 
 const useStyles = makeStyles({
@@ -124,14 +123,6 @@ const App = () => {
 
   return (
     <Fragment>
-      <div className='App'>
-        <header className='App-header'>
-          <img src={logo} className='App-logo' alt='logo' />
-          <h1 className='App-title'>Welcome to JSON Forms with React</h1>
-          <p className='App-intro'>More Forms. Less Code.</p>
-        </header>
-      </div>
-
       <Grid
         container
         justifyContent={'center'}
