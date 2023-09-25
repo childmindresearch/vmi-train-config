@@ -24,11 +24,10 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Package
-        run: mkdir _site && tar -zcvf _site/github-pages.tar.gz build
-
       - name: Upload
         uses: actions/upload-pages-artifact@v2
+        with:
+          path: build
 
   deploy:
     needs: build
