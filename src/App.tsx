@@ -97,6 +97,27 @@ const stringifyData = (data: any) => {
   return JSON.stringify(copyData, null, 2);
 }
 
+/** Utility function for downloading files in the browser */
+function downloadTextFile(content: string, mimeType: string, filename: string) {
+  const a = document.createElement("a")
+  a.href = URL.createObjectURL(
+    new Blob([content], { type: mimeType })
+  )
+  a.download = filename;
+  a.click()
+  document.body.removeChild(a);
+}
+
+/**
+ * Downloads a JSON file with the given name and content.
+ * 
+ * @param content JSON content.
+ * @param filename Download filename. Will be sanitized and .json appended.
+ */
+export function downloadJson(content: string, filename: string) {
+  downloadTextFile(content, "application/json", `${filename.replace(/\W/g, '_')}.json`);
+}
+
 const App = () => {
   const classes = useStyles();
   const [data, setData] = useState<any>(initialData);
@@ -122,14 +143,16 @@ const App = () => {
           <div className={classes.dataContent}>
             <pre id='boundData'>{stringifiedData}</pre>
           </div>
+            <div style={{display: "flex", justifyContent: "space-between"}}>
           <Button
-            className={classes.resetButton}
             onClick={clearData}
             color='primary'
             variant='contained'
           >
             Clear data
           </Button>
+          <Button variant="contained" onClick={() => downloadJson(JSON.stringify(data, null, 2), "roomConfig")}>Export JSON</Button>
+          </div>
         </Grid>
         <Grid item sm={6}>
           <Typography variant={'h4'} className={classes.title}>
