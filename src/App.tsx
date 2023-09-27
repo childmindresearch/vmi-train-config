@@ -1,10 +1,8 @@
 import { materialCells, materialRenderers } from '@jsonforms/material-renderers'
 import { JsonForms } from '@jsonforms/react'
 import Button from '@mui/material/Button'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
 import { makeStyles } from '@mui/styles'
-import { Fragment, useMemo, useState } from 'react'
+import { Fragment, useState } from 'react'
 import './App.css'
 import schema from './schema.json'
 
@@ -154,7 +152,6 @@ export function uploadJson (): Promise<any> {
 const App = () => {
   const classes = useStyles()
   const [data, setData] = useState<any>(initialData)
-  const stringifiedData = useMemo(() => stringifyData(data), [data])
 
   const clearData = () => {
     setData({})
@@ -162,27 +159,23 @@ const App = () => {
 
   return (
     <Fragment>
-      <Grid
-        container
-        justifyContent={'center'}
-        spacing={1}
-        className={classes.container}
-      >
-        <Grid item sm={6}>
-          <Typography variant={'h4'} className={classes.title}>
-            Bound data
-          </Typography>
-          <div className={classes.dataContent}>
-            <pre id='boundData'>{stringifiedData}</pre>
+          <div className={classes.demoform}>
+            <JsonForms
+              schema={schema}
+              data={data}
+              renderers={renderers}
+              cells={materialCells}
+              onChange={({ errors, data }) => setData(data)}
+            />
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: "80%", margin: "auto" }}>
             <Button onClick={clearData} color='primary' variant='contained'>
               Clear data
             </Button>
             <Button
               variant='contained'
               onClick={() =>
-                downloadJson(JSON.stringify(data, null, 2), 'roomConfig')
+                downloadJson(stringifyData(data), 'roomConfig')
               }
             >
               Export JSON
@@ -199,22 +192,6 @@ const App = () => {
               Import JSON
             </Button>
           </div>
-        </Grid>
-        <Grid item sm={6}>
-          <Typography variant={'h4'} className={classes.title}>
-            Rendered form
-          </Typography>
-          <div className={classes.demoform}>
-            <JsonForms
-              schema={schema}
-              data={data}
-              renderers={renderers}
-              cells={materialCells}
-              onChange={({ errors, data }) => setData(data)}
-            />
-          </div>
-        </Grid>
-      </Grid>
     </Fragment>
   )
 }
