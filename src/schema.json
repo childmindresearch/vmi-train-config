@@ -33,8 +33,7 @@
             "type": "number",
             "description": "Duration of the room in seconds",
             "default": 20,
-            "minimum": 0,
-            "exclusiveMinimum": true
+            "exclusiveMinimum": 0
           },
           "numDistractors": {
             "type": "integer",
