@@ -14,7 +14,8 @@
               "elements": [
                 {
                   "type": "Control",
-                  "scope": "#/properties/name"
+                  "scope": "#/properties/name",
+                  "label": "Room Name"
                 },
                 {
                   "type": "Control",
@@ -40,11 +41,13 @@
               "elements": [
                 {
                   "type": "Control",
-                  "scope": "#/properties/durationSec"
+                  "scope": "#/properties/durationSec",
+                  "label": "Duration (sec)"
                 },
                 {
                   "type": "Control",
-                  "scope": "#/properties/numDistractors"
+                  "scope": "#/properties/numDistractors",
+                  "label": "Number of Distractors"
                 }
               ]
             },
@@ -54,13 +57,12 @@
                 {
                   "type": "Control",
                   "scope": "#/properties/path",
-                  "options": {
-                    "showUnfocusedDescription": true
-                  }
+                  "label": "Train Path"
                 },
                 {
                   "type": "Control",
-                  "scope": "#/properties/timepos"
+                  "scope": "#/properties/timepos",
+                  "label": "Time-Position"
                 }
               ]
             },
@@ -69,17 +71,20 @@
               "elements": [
                 {
                   "type": "Control",
-                  "scope": "#/properties/occlusionStartStop"
+                  "scope": "#/properties/occlusionStartStop",
+                  "label": "Occlusions"
                 },
                 {
                   "type": "Control",
-                  "scope": "#/properties/jumps"
+                  "scope": "#/properties/jumps",
+                  "label": "Collisions"
                 }
               ]
             },
             {
               "type": "Control",
               "scope": "#/properties/timeposInterpolation",
+              "label": "Time-Position Interpolation",
               "options": {
                 "showUnfocusedDescription": true
               }
