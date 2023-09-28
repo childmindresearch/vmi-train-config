@@ -1,0 +1,92 @@
+{
+  "type": "VerticalLayout",
+  "elements": [
+    {
+      "type": "Control",
+      "scope": "#/properties/rooms",
+      "options": {
+        "elementLabelProp": "name",
+        "detail": {
+          "type": "VerticalLayout",
+          "elements": [
+            {
+              "type": "HorizontalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/name"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/seed"
+                }
+              ]
+            },
+            {
+              "type": "HorizontalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/width"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/height"
+                }
+              ]
+            },
+            {
+              "type": "HorizontalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/durationSec"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/numDistractors"
+                }
+              ]
+            },
+            {
+              "type": "HorizontalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/path",
+                  "options": {
+                    "showUnfocusedDescription": true
+                  }
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/timepos"
+                }
+              ]
+            },
+            {
+              "type": "HorizontalLayout",
+              "elements": [
+                {
+                  "type": "Control",
+                  "scope": "#/properties/occlusionStartStop"
+                },
+                {
+                  "type": "Control",
+                  "scope": "#/properties/jumps"
+                }
+              ]
+            },
+            {
+              "type": "Control",
+              "scope": "#/properties/timeposInterpolation",
+              "options": {
+                "showUnfocusedDescription": true
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

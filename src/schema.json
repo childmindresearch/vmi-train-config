@@ -6,6 +6,11 @@
       "items": {
         "type": "object",
         "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the room",
+            "default": "Room Name"
+          },
           "seed": {
             "type": "integer",
             "description": "Seed for the random number generator",
@@ -23,11 +28,13 @@
           },
           "durationSec": {
             "type": "number",
-            "description": "Duration of the room in seconds"
+            "description": "Duration of the room in seconds",
+            "default": 20
           },
           "numDistractors": {
             "type": "integer",
-            "description": "Number of distractors in the room"
+            "description": "Number of distractors in the room",
+            "default": 0
           },
           "path": {
             "type": "array",
@@ -40,7 +47,13 @@
                 "y": {
                   "type": "number"
                 }
-              }
+              },
+              "default": [
+                {
+                  "x": 0,
+                  "y": 0
+                }
+              ]
             },
             "minItems": 2,
             "description": "Path of the agent in the room. The minima and maxima of x and y are [0, 1]."
@@ -83,12 +96,12 @@
             "items": {
               "type": "number"
             },
-            "description": "List of jump times in seconds"
+            "description": "List of jump locations as a fraction of total distance travelled."
           },
           "timeposInterpolation": {
             "type": "boolean",
             "default": false,
-            "description": "Interpolate timepos"
+            "description": "Whether to interpolate timepos. If true, acceleration and decceleration will be smooth."
           }
         },
         "required": [

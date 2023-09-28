@@ -1,157 +1,19 @@
+import { createAjv } from '@jsonforms/core'
 import { materialCells, materialRenderers } from '@jsonforms/material-renderers'
 import { JsonForms } from '@jsonforms/react'
 import Button from '@mui/material/Button'
-import { makeStyles } from '@mui/styles'
 import { Fragment, useState } from 'react'
 import './App.css'
+import { downloadJson, uploadJson } from './fileHandling'
 import schema from './schema.json'
-
-const useStyles = makeStyles({
-  container: {
-    padding: '1em',
-    width: '100%'
-  },
-  title: {
-    textAlign: 'center',
-    padding: '0.25em'
-  },
-  dataContent: {
-    display: 'flex',
-    justifyContent: 'center',
-    borderRadius: '0.25em',
-    backgroundColor: '#cecece',
-    marginBottom: '1rem'
-  },
-  resetButton: {
-    margin: 'auto !important',
-    display: 'block !important'
-  },
-  demoform: {
-    margin: 'auto',
-    padding: '1rem'
-  }
-})
-
-const initialData = {
-  rooms: [
-    {
-      seed: 42,
-      width: 20,
-      height: 20,
-      durationSec: 20
-    }
-  ]
-}
+import uischema from './uischema.json'
 
 const renderers = [...materialRenderers]
-
-const deepCopy = <T, U = T extends Array<infer V> ? V : never>(
-  source: T
-): T => {
-  if (Array.isArray(source)) {
-    return source.map(item => deepCopy(item)) as T & U[]
-  }
-  if (source instanceof Date) {
-    return new Date(source.getTime()) as T & Date
-  }
-  if (source && typeof source === 'object') {
-    return (Object.getOwnPropertyNames(source) as (keyof T)[]).reduce<T>(
-      (o, prop) => {
-        Object.defineProperty(
-          o,
-          prop,
-          Object.getOwnPropertyDescriptor(source, prop)!
-        )
-        o[prop] = deepCopy(source[prop])
-        return o
-      },
-      Object.create(Object.getPrototypeOf(source))
-    )
-  }
-  return source
-}
-
-const stringifyData = (data: any) => {
-  if (Object.keys(data).length === 0) {
-    return '{ }'
-  }
-  const copyData: any = deepCopy(data)
-  copyData.rooms.forEach((room: any) => {
-    if (!room.path) {
-      return
-    }
-    room.path = room.path.map((p: any) => [p.x, p.y]).flat()
-  })
-  copyData.rooms.forEach((room: any) => {
-    if (!room.timepos) {
-      return
-    }
-    room.timepos = room.timepos.map((p: any) => [p.time, p.position]).flat()
-  })
-  copyData.rooms.forEach((room: any) => {
-    if (!room.occlusionStartStop) {
-      return
-    }
-    room.occlusionStartStop = room.occlusionStartStop
-      .map((p: any) => [p.start, p.stop])
-      .flat()
-  })
-
-  return JSON.stringify(copyData, null, 2)
-}
-
-/** Utility function for downloading files in the browser */
-function downloadTextFile (content: string, mimeType: string, filename: string) {
-  const a = document.createElement('a')
-  a.href = URL.createObjectURL(new Blob([content], { type: mimeType }))
-  a.download = filename
-  a.click()
-  document.body.removeChild(a)
-}
-
-/**
- * Downloads a JSON file with the given name and content.
- *
- * @param content JSON content.
- * @param filename Download filename. Will be sanitized and .json appended.
- */
-export function downloadJson (content: string, filename: string) {
-  downloadTextFile(
-    content,
-    'application/json',
-    `${filename.replace(/\W/g, '_')}.json`
-  )
-}
-
-export function uploadJson (): Promise<any> {
-  return new Promise((resolve, reject) => {
-    const input = document.createElement('input')
-    input.type = 'file'
-    input.accept = '.json'
-    input.onchange = () => {
-      if (input.files && input.files.length > 0) {
-        const file = input.files[0]
-        const reader = new FileReader()
-        reader.onload = () => {
-          try {
-            const json = JSON.parse(reader.result as string)
-            resolve(json)
-          } catch (e) {
-            reject(e)
-          }
-        }
-        reader.readAsText(file)
-      } else {
-        reject('No file selected')
-      }
-    }
-    input.click()
-  })
-}
+const handleDefaultsAjv = createAjv({ useDefaults: true })
 
 const App = () => {
-  const classes = useStyles()
-  const [data, setData] = useState<any>(initialData)
+  const [data, setData] = useState<any>({})
+  const [errors, setErrors] = useState<any>({})
 
   const clearData = () => {
     setData({})
@@ -159,39 +21,60 @@ const App = () => {
 
   return (
     <Fragment>
-          <div className={classes.demoform}>
-            <JsonForms
-              schema={schema}
-              data={data}
-              renderers={renderers}
-              cells={materialCells}
-              onChange={({ errors, data }) => setData(data)}
-            />
-          </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: "80%", margin: "auto" }}>
-            <Button onClick={clearData} color='primary' variant='contained'>
-              Clear data
-            </Button>
-            <Button
-              variant='contained'
-              onClick={() =>
-                downloadJson(stringifyData(data), 'roomConfig')
-              }
-            >
-              Export JSON
-            </Button>
-            <Button
-              variant='contained'
-              onClick={async () => {
-                const json = await uploadJson()
-                if (json) {
-                  setData(json)
-                }
-              }}
-            >
-              Import JSON
-            </Button>
-          </div>
+      <div className='div-instructions'>
+        <h1>VMI Train Configurations</h1>
+        <p>
+          This form will allow you to configure rooms for the VMI train
+          experiment. To start, click on the "Add room" button at the top right.
+          This will add a new room to the list. You can then click on the room
+          to edit it. You can add as many rooms as you like. Once you're done,
+          simply click on the "Export JSON" button to download the configuration
+          file. If you already have a configuration file, you can click on the
+          "Import JSON" button to load and edit it.
+        </p>
+      </div>
+      <div className='div-button'>
+        <Button onClick={clearData} color='primary' variant='contained'>
+          Clear data
+        </Button>
+        <Button
+          variant='contained'
+          onClick={async () => {
+            const json = await uploadJson()
+            if (json) {
+              setData(json)
+            }
+          }}
+        >
+          Import JSON
+        </Button>
+        <Button
+          variant='contained'
+          onClick={() => {
+            if (Object.keys(errors).length > 0) {
+              alert('Please fix all errors before exporting')
+              return
+            }
+            downloadJson(data, 'roomConfig')}
+          }
+        >
+          Export JSON
+        </Button>
+      </div>
+      <div className='div-form'>
+        <JsonForms
+          schema={schema}
+          uischema={uischema}
+          data={data}
+          renderers={renderers}
+          cells={materialCells}
+          onChange={({ errors, data }) => {
+            setData(data)
+            setErrors(errors)
+          }}
+          ajv={handleDefaultsAjv}
+        />
+      </div>
     </Fragment>
   )
 }
