@@ -14,27 +14,33 @@
           "seed": {
             "type": "integer",
             "description": "Seed for the random number generator",
-            "default": 42
+            "default": 42,
+            "minimum": 0
           },
           "width": {
             "type": "number",
             "description": "Width of the room",
-            "default": 20
+            "default": 20,
+            "minimum": 0
           },
           "height": {
             "type": "number",
             "description": "Height of the room",
-            "default": 20
+            "default": 20,
+            "minimum": 0
           },
           "durationSec": {
             "type": "number",
             "description": "Duration of the room in seconds",
-            "default": 20
+            "default": 20,
+            "minimum": 0,
+            "exclusiveMinimum": true
           },
           "numDistractors": {
             "type": "integer",
             "description": "Number of distractors in the room",
-            "default": 0
+            "default": 0,
+            "minimum": 0
           },
           "path": {
             "type": "array",
@@ -42,10 +48,16 @@
               "type": "object",
               "properties": {
                 "x": {
-                  "type": "number"
+                  "type": "number",
+                  "description": "Fraction of the room width",
+                  "minimum": 0,
+                  "maximum": 1
                 },
                 "y": {
-                  "type": "number"
+                  "type": "number",
+                  "description": "Fraction of the room height",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               },
               "default": [
@@ -65,11 +77,15 @@
               "properties": {
                 "time": {
                   "type": "number",
-                  "Description": "Time in seconds"
+                  "Description": "Time in seconds",
+                  "minimum": 0,
+                  "maximum": 1
                 },
                 "position": {
                   "type": "number",
-                  "Description": "Position as a fraction of the total track length"
+                  "Description": "Position as a fraction of the total track length",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               }
             },
@@ -82,11 +98,15 @@
               "properties": {
                 "start": {
                   "type": "number",
-                  "description": "Start of the occlusion as a fraction of the total track length."
+                  "description": "Start of the occlusion as a fraction of the total track length.",
+                  "minimum": 0,
+                  "maximum": 1
                 },
                 "stop": {
                   "type": "number",
-                  "description": "Stop of the occlusion as a fraction of the total track length."
+                  "description": "Stop of the occlusion as a fraction of the total track length.",
+                  "minimum": 0,
+                  "maximum": 1
                 }
               }
             }
@@ -94,7 +114,9 @@
           "jumps": {
             "type": "array",
             "items": {
-              "type": "number"
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
             },
             "description": "List of jump locations as a fraction of total distance travelled."
           },

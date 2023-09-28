@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "VMI Train Config",
+  "name": "Create VMI train configurations",
   "icons": [
     {
       "src": "favicon.ico",
