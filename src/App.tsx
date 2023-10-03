@@ -75,7 +75,7 @@ const App = () => {
         onClose={() => {
           toggleDrawer(!drawerState)
         }}
-        PaperProps={{ sx: { width: '25%' } }}
+        PaperProps={{ sx: { width: '50%' } }}
       >
         <Explanations />
       </Drawer>
