@@ -21,6 +21,10 @@ body {
   margin: 'auto';
 }
 
+.div-drawer {
+  max-width: 20%;
+}
+
 .div-button {
   display: flex;
   justify-content: space-between;

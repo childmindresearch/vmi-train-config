@@ -1,9 +1,11 @@
 import { createAjv } from '@jsonforms/core'
 import { materialCells, materialRenderers } from '@jsonforms/material-renderers'
 import { JsonForms } from '@jsonforms/react'
+import { Drawer } from '@mui/material'
 import Button from '@mui/material/Button'
 import { Fragment, useState } from 'react'
 import './App.css'
+import Explanations from './Explanations'
 import { downloadJson, uploadJson } from './fileHandling'
 import schema from './schema.json'
 import uischema from './uischema.json'
@@ -14,6 +16,7 @@ const handleDefaultsAjv = createAjv({ useDefaults: true })
 const App = () => {
   const [data, setData] = useState<any>({})
   const [errors, setErrors] = useState<any>({})
+  const [drawerState, toggleDrawer] = useState(false)
 
   const clearData = () => {
     setData({})
@@ -33,6 +36,7 @@ const App = () => {
           "Import JSON" button to load and edit it.
         </p>
       </div>
+
       <div className='div-button'>
         <Button onClick={clearData} color='primary' variant='contained'>
           Clear data
@@ -55,12 +59,26 @@ const App = () => {
               alert('Please fix all errors before exporting')
               return
             }
-            downloadJson(data, 'roomConfig')}
-          }
+            downloadJson(data, 'roomConfig')
+          }}
         >
           Export JSON
         </Button>
+        <Button variant='contained' onClick={() => toggleDrawer(!drawerState)}>
+          Room Properties
+        </Button>
       </div>
+
+      <Drawer
+        anchor='right'
+        open={drawerState}
+        onClose={() => {
+          toggleDrawer(!drawerState)
+        }}
+        PaperProps={{ sx: { width: '25%' } }}
+      >
+        <Explanations />
+      </Drawer>
       <div className='div-form'>
         <JsonForms
           schema={schema}

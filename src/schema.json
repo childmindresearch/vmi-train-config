@@ -58,13 +58,7 @@
                   "minimum": 0,
                   "maximum": 1
                 }
-              },
-              "default": [
-                {
-                  "x": 0,
-                  "y": 0
-                }
-              ]
+              }
             },
             "minItems": 2,
             "description": "Path of the agent in the room. The minima and maxima of x and y are [0, 1]."
