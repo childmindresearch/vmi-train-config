@@ -53,6 +53,11 @@
               ]
             },
             {
+              "type": "Control",
+              "scope": "#/properties/instructions",
+              "label": "Instructions"
+            },
+            {
               "type": "HorizontalLayout",
               "elements": [
                 {

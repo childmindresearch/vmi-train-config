@@ -26,6 +26,9 @@ const Explanations = () => {
               the room.
             </li>
             <li>
+              <b>Instructions</b>: The instructions to provide on the starting screen of the room.
+              </li>
+            <li>
               <b>Train Path</b>: The path that the train will take throughout the 
               room. The tracks will start at the first point and end at the last 
               point. The train will travel along the path in the order that the 

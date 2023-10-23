@@ -29,6 +29,11 @@
             "default": 20,
             "minimum": 0
           },
+          "instructions": {
+            "type": "string",
+            "description": "Instructions for the room",
+            "default": ""
+          },
           "durationSec": {
             "type": "number",
             "description": "Duration of the room in seconds",
