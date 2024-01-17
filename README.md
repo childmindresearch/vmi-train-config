@@ -4,10 +4,10 @@ This repository serves as the frontend for creating configurations for the VMI T
 
 ## Repository Structure
 
-- **React Application**: The core application resides in the `src` directory. The main entry point is [App.tsx](https://github.com/cmi-dair/vmi-train-config/blob/master/src/App.tsx) and the primary rendering logic is in [index.tsx](https://github.com/cmi-dair/vmi-train-config/blob/master/src/index.tsx).
-- **Configuration Schema**: The JSON schema that defines the structure and constraints of the configuration is located in [schema.json](https://github.com/cmi-dair/vmi-train-config/blob/master/src/schema.json).
-- **Testing Suite**: Cypress tests can be found in the `cypress` directory. The primary test suite is [test_form.spec.js](https://github.com/cmi-dair/vmi-train-config/blob/master/cypress/integration/test_form.spec.js).
-- **CI/CD Configuration**: Continuous Integration and Deployment configurations are housed in the `.github/workflows` directory. The main CI workflow is in [main.yml](https://github.com/cmi-dair/vmi-train-config/blob/master/.github/workflows/main.yml) and the GitHub Pages deployment configuration is in [gh_pages.yaml](https://github.com/cmi-dair/vmi-train-config/blob/master/.github/workflows/gh_pages.yaml).
+- **React Application**: The core application resides in the `src` directory. The main entry point is [App.tsx](https://github.com/childmindresearch/vmi-train-config/blob/master/src/App.tsx) and the primary rendering logic is in [index.tsx](https://github.com/childmindresearch/vmi-train-config/blob/master/src/index.tsx).
+- **Configuration Schema**: The JSON schema that defines the structure and constraints of the configuration is located in [schema.json](https://github.com/childmindresearch/vmi-train-config/blob/master/src/schema.json).
+- **Testing Suite**: Cypress tests can be found in the `cypress` directory. The primary test suite is [test_form.spec.js](https://github.com/childmindresearch/vmi-train-config/blob/master/cypress/integration/test_form.spec.js).
+- **CI/CD Configuration**: Continuous Integration and Deployment configurations are housed in the `.github/workflows` directory. The main CI workflow is in [main.yml](https://github.com/childmindresearch/vmi-train-config/blob/master/.github/workflows/main.yml) and the GitHub Pages deployment configuration is in [gh_pages.yaml](https://github.com/childmindresearch/vmi-train-config/blob/master/.github/workflows/gh_pages.yaml).
 
 ## Getting Started
 
